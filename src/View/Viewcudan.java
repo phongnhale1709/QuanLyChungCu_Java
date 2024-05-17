@@ -5,23 +5,21 @@
 package View;
 
 import MODEL.Modeltaikhoan;
-import java.awt.BorderLayout;
 
 /**
  *
  * @author Thinkbook 16
  */
-public class Viewbql extends javax.swing.JFrame {
+public class Viewcudan extends javax.swing.JFrame {
 
     /**
-     * Creates new form Viewbql
+     * Creates new form Viewcudan
      */
-    public Viewbql() {
+    public Viewcudan() {
         initComponents();
-         
     }
 
-    Viewbql(Modeltaikhoan acc) {
+    Viewcudan(Modeltaikhoan acc) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -41,12 +39,6 @@ public class Viewbql extends javax.swing.JFrame {
         jbutoncanho = new javax.swing.JButton();
         jButtoncudan = new javax.swing.JButton();
         jButtonhopdong = new javax.swing.JButton();
-        jButtonhoadon = new javax.swing.JButton();
-        jButtonyeucau = new javax.swing.JButton();
-        jButtonxe = new javax.swing.JButton();
-        jButtonnhanvien = new javax.swing.JButton();
-        jButtontaikhoan = new javax.swing.JButton();
-        jButtonthongke = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -84,7 +76,7 @@ public class Viewbql extends javax.swing.JFrame {
         );
 
         jbutoncanho.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jbutoncanho.setText("CĂN HỘ");
+        jbutoncanho.setText("THÔNG TIN CÁ NHÂN");
         jbutoncanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbutoncanhoActionPerformed(evt);
@@ -92,7 +84,7 @@ public class Viewbql extends javax.swing.JFrame {
         });
 
         jButtoncudan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtoncudan.setText("CƯ DÂN");
+        jButtoncudan.setText("THÔNG TIN HÓA ĐƠN");
         jButtoncudan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtoncudanActionPerformed(evt);
@@ -100,35 +92,12 @@ public class Viewbql extends javax.swing.JFrame {
         });
 
         jButtonhopdong.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtonhopdong.setText("HỢP ĐỒNG");
+        jButtonhopdong.setText("GỬI YÊU CẦU");
         jButtonhopdong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonhopdongActionPerformed(evt);
             }
         });
-
-        jButtonhoadon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtonhoadon.setText("HÓA ĐƠN");
-
-        jButtonyeucau.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtonyeucau.setText("YÊU CẦU CƯ DÂN");
-
-        jButtonxe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtonxe.setText("XE");
-        jButtonxe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonxeActionPerformed(evt);
-            }
-        });
-
-        jButtonnhanvien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtonnhanvien.setText("NHÂN VIÊN");
-
-        jButtontaikhoan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtontaikhoan.setText("TÀI KHOẢN");
-
-        jButtonthongke.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButtonthongke.setText("THỐNG KÊ");
 
         jButton9.setBackground(new java.awt.Color(153, 204, 255));
         jButton9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -143,20 +112,14 @@ public class Viewbql extends javax.swing.JFrame {
             .addGroup(jpnMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonyeucau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbutoncanho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtoncudan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonhopdong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonhoadon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonxe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonnhanvien, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtontaikhoan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonthongke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonhopdong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnMenuLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton9)
-                .addGap(75, 75, 75))
+                .addGap(78, 78, 78))
         );
         jpnMenuLayout.setVerticalGroup(
             jpnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,21 +131,9 @@ public class Viewbql extends javax.swing.JFrame {
                 .addComponent(jButtoncudan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonhopdong, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonhoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonxe, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonyeucau, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonnhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtontaikhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonthongke, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jButton9)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
 
         jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Dowload\\2.jpg")); // NOI18N
@@ -205,23 +156,19 @@ public class Viewbql extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonhopdongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonhopdongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonhopdongActionPerformed
+
     private void jButtoncudanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoncudanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtoncudanActionPerformed
 
     private void jbutoncanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbutoncanhoActionPerformed
-            Viewcanho viewch=new Viewcanho();
-            viewch.show();
-            dispose(); 
+        Viewcanho viewch=new Viewcanho();
+        viewch.show();
+        dispose();
     }//GEN-LAST:event_jbutoncanhoActionPerformed
-
-    private void jButtonhopdongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonhopdongActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonhopdongActionPerformed
-
-    private void jButtonxeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonxeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonxeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,20 +187,20 @@ public class Viewbql extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Viewbql.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewcudan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Viewbql.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewcudan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Viewbql.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewcudan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Viewbql.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Viewcudan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Viewbql().setVisible(true);
+                new Viewcudan().setVisible(true);
             }
         });
     }
@@ -261,13 +208,7 @@ public class Viewbql extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtoncudan;
-    private javax.swing.JButton jButtonhoadon;
     private javax.swing.JButton jButtonhopdong;
-    private javax.swing.JButton jButtonnhanvien;
-    private javax.swing.JButton jButtontaikhoan;
-    private javax.swing.JButton jButtonthongke;
-    private javax.swing.JButton jButtonxe;
-    private javax.swing.JButton jButtonyeucau;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;

@@ -4,17 +4,23 @@
  */
 package View;
 
+import DAO.Daotaikhoan;
+import MODEL.Modeltaikhoan;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author HP
  */
-public class Viewdangnhap1 extends javax.swing.JFrame {
+public class Viewdangnhap extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Viewdangnhap1
-     */
-    public Viewdangnhap1() {
+    public Viewdangnhap() {
         initComponents();
+    }
+
+    private Viewdangnhap(JFrame jFrame, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -33,18 +39,17 @@ public class Viewdangnhap1 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtdanhnhap = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButtondangnhap = new javax.swing.JButton();
         jButtonquenmk = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        jtmatkhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(196, 233, 245));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("D:\\UIT\\QUANLYCHUNGCU_minion\\src\\images\\1.png")); // NOI18N
-        jLabel6.setText("jLabel6");
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1.png"))); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -55,10 +60,10 @@ public class Viewdangnhap1 extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Tên đăng nhập");
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 255)));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jtdanhnhap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 255)));
+        jtdanhnhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jtdanhnhapActionPerformed(evt);
             }
         });
 
@@ -85,10 +90,10 @@ public class Viewdangnhap1 extends javax.swing.JFrame {
             }
         });
 
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 255)));
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        jtmatkhau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 204, 255)));
+        jtmatkhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                jtmatkhauActionPerformed(evt);
             }
         });
 
@@ -97,16 +102,15 @@ public class Viewdangnhap1 extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2)
-                        .addComponent(jTextField1)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(116, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtdanhnhap, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                    .addComponent(jtmatkhau)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonquenmk, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonquenmk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtondangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(104, 104, 104))
@@ -116,18 +120,18 @@ public class Viewdangnhap1 extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtdanhnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jtmatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtondangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonquenmk, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonquenmk))
                 .addContainerGap(134, Short.MAX_VALUE))
         );
 
@@ -180,55 +184,77 @@ public class Viewdangnhap1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jtdanhnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtdanhnhapActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jtdanhnhapActionPerformed
 
     private void jButtondangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtondangnhapActionPerformed
-        // TODO add your handling code here:
+        checkLogin(); 
+        
     }//GEN-LAST:event_jButtondangnhapActionPerformed
 
     private void jButtonquenmkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonquenmkActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonquenmkActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void jtmatkhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtmatkhauActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
-
+    }//GEN-LAST:event_jtmatkhauActionPerformed
+    public void checkLogin() {
+        String usercheck = jtdanhnhap.getText();
+        String passwordcheck = new  String(jtmatkhau.getPassword());
+        if (usercheck.equals("") || passwordcheck.equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {                
+                Modeltaikhoan acc = Daotaikhoan.getInstance().selectById(usercheck);                
+                if (acc == null) {
+                    JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại trên hệ thống !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    if (passwordcheck.equals(acc.getPassword())) {
+                        JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+                        dispose();
+                        String role = acc.getRole();
+                         
+                        switch (role) {
+                            case "BANQUANLY" -> {
+                                Viewbql viewbql = new Viewbql();
+                                viewbql.show();
+                                dispose();
+                                
+                                //ad.setName(NhanVienDAO.getInstance().selectById(acc.getMaNV()).getTenNV());
+                            }
+                            case "NHANVIEN" -> {
+                                Viewnhanvien viewnv = new Viewnhanvien();
+                                viewnv.show();
+                                dispose();
+                               
+                                //bh.setName(NhanVienDAO.getInstance().selectById(acc.getMaNV()).getTenNV());
+                            }
+                            case "CUDAN" -> {
+                                Viewcudan viewcd = new Viewcudan();
+                                viewcd.show();
+                                dispose();  // Hiển thị frame Viewcudan
+                                //nh.setName(NhanVienDAO.getInstance().selectById(acc.getMaNV()).getTenNV());
+                            }
+                        }
+                    } else 
+                        JOptionPane.showMessageDialog(this, "Sai mật khẩu !", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
+                } 
+                } catch (Exception e) {
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Viewdangnhap1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Viewdangnhap1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Viewdangnhap1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Viewdangnhap1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Viewdangnhap1().setVisible(true);
-            }
-        });
+        public void run() {
+            // Tạo một đối tượng Viewdangnhap và hiển thị nó
+            new Viewdangnhap().setVisible(true);
+        }
+    });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -242,7 +268,7 @@ public class Viewdangnhap1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jtdanhnhap;
+    private javax.swing.JPasswordField jtmatkhau;
     // End of variables declaration//GEN-END:variables
 }

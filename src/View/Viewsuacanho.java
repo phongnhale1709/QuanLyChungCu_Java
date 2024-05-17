@@ -3,13 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
-
+import javax.swing.JOptionPane;
+import MODEL.Modelcanho;
+import DAO.Daocanho;
+import View.Viewcanho;
 /**
  *
  * @author HP
  */
 public class Viewsuacanho extends javax.swing.JFrame {
-
+  
  
     public Viewsuacanho() {
         initComponents();
@@ -55,7 +58,7 @@ public class Viewsuacanho extends javax.swing.JFrame {
         txtMacudan = new javax.swing.JTextField();
         txtManhanvien = new javax.swing.JTextField();
         txtMahopdong = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSuacanho = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -67,7 +70,7 @@ public class Viewsuacanho extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(449, 555));
 
         jLabelMach.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabelMach.setText("Mã Căn Hộ");
+        jLabelMach.setText("Mã căn hộ");
 
         jLabelDientich.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabelDientich.setText("Diện tích");
@@ -118,10 +121,10 @@ public class Viewsuacanho extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel4.setText("Mã Hợp Đồng");
 
-        jButton1.setText("Sửa");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSuacanho.setText("Sửa");
+        btnSuacanho.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSuacanhoActionPerformed(evt);
             }
         });
 
@@ -162,33 +165,31 @@ public class Viewsuacanho extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
-                        .addGap(74, 74, 74)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDientich)
-                            .addComponent(txtSophongngu)
-                            .addComponent(txtMach)
-                            .addComponent(txtSophongtam)
-                            .addComponent(txtTang)
-                            .addComponent(txtGiathue)
-                            .addComponent(txtPhidichvu)
-                            .addComponent(txtSoluongxe)
-                            .addComponent(CBLoaicanho, 0, 188, Short.MAX_VALUE)
-                            .addComponent(txtGiaxe1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtMacudan)
-                            .addComponent(txtManhanvien)
-                            .addComponent(txtMahopdong)))
+                        .addGap(71, 71, 71))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(259, 259, 259))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(148, 148, 148)
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                                .addComponent(jButton3)))))
-                .addContainerGap(76, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(btnSuacanho)
+                        .addGap(42, 42, 42)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(43, 43, 43)
+                        .addComponent(jButton3))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtDientich)
+                        .addComponent(txtSophongngu)
+                        .addComponent(txtSophongtam)
+                        .addComponent(txtTang)
+                        .addComponent(txtGiathue)
+                        .addComponent(txtPhidichvu)
+                        .addComponent(txtSoluongxe)
+                        .addComponent(CBLoaicanho, 0, 188, Short.MAX_VALUE)
+                        .addComponent(txtGiaxe1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtMacudan)
+                        .addComponent(txtManhanvien)
+                        .addComponent(txtMahopdong))
+                    .addComponent(txtMach, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,11 +210,11 @@ public class Viewsuacanho extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSopngu)
                     .addComponent(txtSophongngu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSoptam)
                     .addComponent(txtSophongtam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTang)
                     .addComponent(txtTang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -233,24 +234,24 @@ public class Viewsuacanho extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelGiaxe)
                     .addComponent(txtGiaxe1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMacudan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(9, 9, 9)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtManhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(9, 9, 9)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtMahopdong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMahopdong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnSuacanho)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addGap(29, 29, 29))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -275,47 +276,48 @@ public class Viewsuacanho extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CBLoaicanhoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSuacanhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuacanhoActionPerformed
         try {
-            String mach = txtMach.getText();
-            double dienTich = Double.parseDouble(txtDientich.getText());
-            String loaich = CBLoaicanho.getSelectedItem().toString();
-            int spn = Integer.parseInt(txtSophongngu.getText());
-            int spt = Integer.parseInt(txtSophongtam.getText());
-            int tang = Integer.parseInt(txtTang.getText());
-            double giathue = Double.parseDouble(txtGiathue.getText());
-            double phidv = Double.parseDouble(txtPhidichvu.getText());
-            double giaxe = Double.parseDouble(txtGiaxe.getText());
-            int slxe = Integer.parseInt(txtSoluongxe.getText());
-            String macd = txtmacd.getText();
-            String manv = txtmanv.getText();
-            String mahd = txtmahd.getText();
+        String mach = txtMach.getText();
+        double dienTich = Double.parseDouble(txtDientich.getText());
+        String loaich = CBLoaicanho.getSelectedItem().toString();
+        int spn = Integer.parseInt(txtSophongngu.getText());
+        int spt = Integer.parseInt(txtSophongtam.getText());
+        int tang = Integer.parseInt(txtTang.getText());
+        double giathue = Double.parseDouble(txtGiathue.getText());
+        double phidv = Double.parseDouble(txtPhidichvu.getText());
+        double giaxe = Double.parseDouble(txtGiaxe1.getText());
+        int slxe = Integer.parseInt(txtSoluongxe.getText());
+        String macd = txtMacudan.getText();
+        String manv = txtManhanvien.getText();
+        String mahd = txtMahopdong.getText();
 
-            // Create a ModelCanho object with the retrieved data
-            Modelcanho ch = new Modelcanho(mach, dienTich, loaich, spn, spt, tang, giathue, phidv, giaxe, slxe, macd, manv, mahd);
-            Daocanho them = new Daocanho();
+        // Create a ModelCanho object with the retrieved data
+        Modelcanho ch = new Modelcanho(mach, dienTich, loaich, spn, spt, tang, giathue, phidv, giaxe, slxe, macd, manv, mahd);
+        Daocanho capnhat = new Daocanho();
 
-            // Call the addcanho method of your DAO class to add the Canho
-            them.addcanho(ch);
+        // Call the updateCanho method of your DAO class to update the Canho
+        capnhat.updatecanho(ch);
 
-            // Optionally display a success message or update UI
-            JOptionPane.showMessageDialog(null, "Căn hộ đã được thêm thành công!");
+        // Optionally display a success message or update UI
+        JOptionPane.showMessageDialog(null, "Căn hộ đã được cập nhật thành công!");
 
-            // Optionally clear input fields or update UI
-            Viewcanho viewch= new Viewcanho();
-            viewch.show();
-            dispose();
+        // Optionally clear input fields or update UI
+        Viewcanho viewch = new Viewcanho();
+        viewch.show();
+        dispose();
 
-            // Update UI to reflect changes
-            // You may need to refresh the table or list displaying the data
+        // Update UI to reflect changes
+        // You may need to refresh the table or list displaying the data
 
-        } catch (Exception ex) {
-            // Handle any errors or exceptions (e.g., display error message)
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi thêm căn hộ: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    } catch (Exception ex) {
+        // Handle any errors or exceptions (e.g., display error message)
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi cập nhật căn hộ: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnSuacanhoActionPerformed
 
+   
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         txtMach.setText("");
         txtDientich.setText("");
@@ -375,7 +377,7 @@ public class Viewsuacanho extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CBLoaicanho;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSuacanho;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

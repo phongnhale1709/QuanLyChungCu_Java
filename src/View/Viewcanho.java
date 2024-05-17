@@ -17,22 +17,27 @@ import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.TableColumn;
 import MODEL.Modelcanho;
+import controler.Timcanho;
 /**
  *
  * @author HP
  */
 public class Viewcanho extends javax.swing.JFrame {
+    
      private DefaultTableModel tblModel;
     DecimalFormat formatter = new DecimalFormat("###,###,###");
-    /**
+
+     /**
      * Creates new form NewJFrame
      */
     public Viewcanho() {
         initComponents();
         jTableCanho.setDefaultEditor(Object.class, null);
-        initTable();
-        loadDataToTable();
-        //changeTextFind();
+              initTable();
+       loadDataToTable();
+        //filltable();
+        
+        changeTextFind();
     }
      public final void initTable() {
         tblModel = new DefaultTableModel();
@@ -53,12 +58,49 @@ public class Viewcanho extends javax.swing.JFrame {
        
         
     }
+
+     public void changeTextFind() {
+        txttracuu.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                /* do nothing */
+                if (txttracuu.getText().length() == 0) {
+                    loadDataToTable();
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                /* do nothing */
+
+            }
+        });
+    }
+    public ArrayList<Modelcanho> searchFn(String luaChon, String content) {
+        ArrayList<MODEL.Modelcanho> result = new ArrayList<>();
+        Timcanho timch = new Timcanho();
+        switch (luaChon) {
+            case "MACH":
+                result = timch.searchMACH(content);
+                break;
+            case "LoaiCH":
+                result = timch.searchLoaiCH(content);
+                break;
+            
+        }
+        return result;
+    }
      public void loadDataToTable() {
     try {
         Daocanho chdao = new Daocanho();
         ArrayList<MODEL.Modelcanho> arms = chdao.selectAll();
         tblModel.setRowCount(0);
-        for (MODEL.Modelcanho i : arms) {
+        for (MODEL.Modelcanho i : arms ) {
             tblModel.addRow(new Object[]{
                     i.getMACH(), i.getDienTich(),i.getLoaiCH(),i.getSoPhongNgu(),i.getSoPhongTam(),i.getTang(),formatter.format(i.getGiaThue()) + "đ",formatter.format(i.getPHIDV()) + "đ",
                 formatter.format(i.getGIAXE()) + "đ",i.getSLXE()
@@ -90,6 +132,7 @@ public class Viewcanho extends javax.swing.JFrame {
         labQLCH = new javax.swing.JLabel();
         txttracuu = new javax.swing.JTextField();
         jButtontrangchu = new javax.swing.JButton();
+        jComboluachon = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 255, 255));
@@ -114,6 +157,16 @@ public class Viewcanho extends javax.swing.JFrame {
         });
 
         btntracuu.setText("Tra cứu");
+        btntracuu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btntracuuMouseClicked(evt);
+            }
+        });
+        btntracuu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntracuuActionPerformed(evt);
+            }
+        });
 
         jTableCanho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,6 +179,16 @@ public class Viewcanho extends javax.swing.JFrame {
                 "Mã Căn Hộ", "Diện Tích", "Loại Căn Hộ", "Số Phòng Ngủ", "Số Phòng Tắm", "Tầng", "Giá Thuê", "Phí Dịch Vụ", "Giá Xe", "Số Lượng Xe"
             }
         ));
+        jTableCanho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCanhoMouseClicked(evt);
+            }
+        });
+        jTableCanho.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTableCanhoKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCanho);
         if (jTableCanho.getColumnModel().getColumnCount() > 0) {
             jTableCanho.getColumnModel().getColumn(4).setMinWidth(50);
@@ -145,6 +208,13 @@ public class Viewcanho extends javax.swing.JFrame {
         jButtontrangchu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtontrangchuActionPerformed(evt);
+            }
+        });
+
+        jComboluachon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MACH", "LoaiCH", " ", " ", " " }));
+        jComboluachon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboluachonActionPerformed(evt);
             }
         });
 
@@ -170,6 +240,8 @@ public class Viewcanho extends javax.swing.JFrame {
             .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboluachon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(txttracuu, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btntracuu, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,7 +257,8 @@ public class Viewcanho extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btntracuu)
-                    .addComponent(txttracuu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txttracuu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboluachon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
@@ -216,6 +289,10 @@ public class Viewcanho extends javax.swing.JFrame {
 
     private void txttracuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttracuuActionPerformed
         // TODO add your handling code here:
+         String luaChon = jComboluachon.getSelectedItem().toString();
+        String content = txttracuu.getText();
+        ArrayList<MODEL.Modelcanho> result = searchFn(luaChon, content);
+        loadDataToTableSearch(result);
     }//GEN-LAST:event_txttracuuActionPerformed
 
     private void jButtontrangchuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtontrangchuActionPerformed
@@ -235,6 +312,48 @@ public class Viewcanho extends javax.swing.JFrame {
         viewch.show();
         dispose();  // TODO add your handling code here:
     }//GEN-LAST:event_btnsuaActionPerformed
+
+    private void jTableCanhoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableCanhoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableCanhoKeyReleased
+
+    private void jTableCanhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCanhoMouseClicked
+                        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableCanhoMouseClicked
+ public void loadDataToTableSearch(ArrayList<MODEL.Modelcanho> result) {
+        try {
+            tblModel.setRowCount(0);
+            for (MODEL.Modelcanho i : result) {
+                tblModel.addRow(new Object[]{
+                    i.getMACH(), i.getDienTich(),i.getLoaiCH(),i.getSoPhongNgu(),i.getSoPhongTam(),i.getTang(),formatter.format(i.getGiaThue()) + "đ",formatter.format(i.getPHIDV()) + "đ",
+                formatter.format(i.getGIAXE()) + "đ",i.getSLXE()
+                });
+            }
+        } catch (Exception e) {  
+        }
+    }
+
+    private void btntracuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntracuuActionPerformed
+           jComboluachon.setSelectedIndex(0);
+           loadDataToTable();
+    }//GEN-LAST:event_btntracuuActionPerformed
+
+    private void jComboluachonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboluachonActionPerformed
+        // TODO add your handling code here:
+         String luaChon = jComboluachon.getSelectedItem().toString();
+        String content = txttracuu.getText();
+        ArrayList<MODEL.Modelcanho> result = searchFn(luaChon, content);
+        loadDataToTableSearch(result);
+    }//GEN-LAST:event_jComboluachonActionPerformed
+
+    private void btntracuuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btntracuuMouseClicked
+
+                   // TODO add your handling code here:
+        String luaChon = jComboluachon.getSelectedItem().toString();
+        String content = txttracuu.getText();
+        ArrayList<MODEL.Modelcanho> result = searchFn(luaChon, content);
+        loadDataToTableSearch(result);
+    }//GEN-LAST:event_btntracuuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -270,7 +389,14 @@ public class Viewcanho extends javax.swing.JFrame {
                 new Viewcanho().setVisible(true);
             }
         });
+    
+  
     }
+    
+    
+    
+   
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnsua;
@@ -278,6 +404,7 @@ public class Viewcanho extends javax.swing.JFrame {
     private javax.swing.JButton btntracuu;
     private javax.swing.JButton btnxoa;
     private javax.swing.JButton jButtontrangchu;
+    private javax.swing.JComboBox<String> jComboluachon;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableCanho;

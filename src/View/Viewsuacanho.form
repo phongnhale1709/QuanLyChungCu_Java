@@ -77,43 +77,40 @@
                               </Group>
                               <Component id="jLabelGiaxe" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtDientich" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtSophongngu" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtMach" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtSophongtam" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtTang" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtGiathue" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtPhidichvu" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtSoluongxe" alignment="0" max="32767" attributes="0"/>
-                              <Component id="CBLoaicanho" alignment="0" pref="188" max="32767" attributes="0"/>
-                              <Component id="txtGiaxe1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="txtMacudan" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtManhanvien" max="32767" attributes="0"/>
-                              <Component id="txtMahopdong" max="32767" attributes="0"/>
-                          </Group>
+                          <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="259" pref="259" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
-                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="64" max="32767" attributes="0"/>
-                                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnSuacanho" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="76" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtDientich" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtSophongngu" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtSophongtam" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtTang" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtGiathue" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtPhidichvu" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtSoluongxe" alignment="0" max="32767" attributes="0"/>
+                          <Component id="CBLoaicanho" alignment="0" pref="188" max="32767" attributes="0"/>
+                          <Component id="txtGiaxe1" alignment="1" max="32767" attributes="0"/>
+                          <Component id="txtMacudan" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtManhanvien" max="32767" attributes="0"/>
+                          <Component id="txtMahopdong" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="txtMach" min="-2" pref="188" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="80" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -140,12 +137,12 @@
                       <Component id="jLabelSopngu" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSophongngu" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelSoptam" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSophongtam" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelTang" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtTang" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -170,28 +167,28 @@
                       <Component id="jLabelGiaxe" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtGiaxe1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtMacudan" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtManhanvien" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel3" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtMahopdong" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMahopdong" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="41" max="32767" attributes="0"/>
+                  <EmptySpace pref="36" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnSuacanho" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -202,7 +199,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="M&#xe3; C&#x103;n H&#x1ed9;"/>
+            <Property name="text" type="java.lang.String" value="M&#xe3; c&#x103;n h&#x1ed9;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDientich">
@@ -346,12 +343,12 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtMahopdong">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnSuacanho">
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuacanhoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton2">

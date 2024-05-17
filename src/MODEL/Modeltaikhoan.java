@@ -8,15 +8,24 @@ package MODEL;
  *
  * @author hoangxuanthuy
  */
-public class taikhoan {
+public class Modeltaikhoan {
     private String username; // VARCHAR2(10)
     private String password; // VARCHAR2(6)
     private String role; // VARCHAR2(10)
+    private String email;
 
-    public taikhoan(String username, String password, String role) {
+    public Modeltaikhoan(String username, String password, String role, String email) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.email = email;
+    }
+    public Modeltaikhoan(Modeltaikhoan c)
+    {
+        this.username=c.getUsername();
+        this.password=c.getPassword();
+        this.role=c.getRole();
+        this.email=c.getEmail();
     }
 
     public String getUsername() {
@@ -31,6 +40,10 @@ public class taikhoan {
         return role;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -43,9 +56,15 @@ public class taikhoan {
         this.role = role;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        return "taikhoan{" + "username=" + username + ", password=" + password + ", role=" + role + '}';
+        return "Modeltaikhoan{" + "username=" + username + ", password=" + password + ", role=" + role + ", email=" + email + '}';
     }
+
+    
     
 }

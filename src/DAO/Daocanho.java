@@ -14,6 +14,7 @@ import MODEL.Modelcanho;
 import java.sql.CallableStatement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
         public class Daocanho   {
 
@@ -51,22 +52,20 @@ import java.text.SimpleDateFormat;
 
       public void updatecanho(Modelcanho ch) throws SQLException, ParseException {
         try (Connection c =OracleJDBCconnection.getJDBCconnection();
-            CallableStatement callableStatement = c.prepareCall("{CALL UPDATE_BENHNHAN(?,?,?,?,?,?,?,?)}")) {
+            CallableStatement callableStatement = c.prepareCall("{CALL UPDATE_CANHO(?,?,?,?,?,?,?,?,?,?,?,?)}")) {
             
-            callableStatement.setString(1, bn.getCcccd());
-            callableStatement.setString(2, bn.getTen());
-            
-            SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY"); // Sửa đổi định dạng ngày
-            java.util.Date date = sdf.parse(bn.getNgaysinh());
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            callableStatement.setDate(3, sqlDate);
-            
-            callableStatement.setString(4, bn.getGt());
-            callableStatement.setString(5, bn.getSdt());
-            callableStatement.setString(6, bn.getDiachi());
-            callableStatement.setString(7, bn.getGhichu());
-            callableStatement.setString(8, bn.getTinhtrang());
-            
+            callableStatement.setDouble(1, ch.getDienTich());
+            callableStatement.setString(2, ch.getLoaiCH());
+            callableStatement.setInt(3, ch.getSoPhongNgu());
+            callableStatement.setInt(4, ch.getSoPhongTam());
+            callableStatement.setInt(5, ch.getTang());
+            callableStatement.setDouble(6, ch.getGiaThue());
+            callableStatement.setDouble(7, ch.getPHIDV());
+            callableStatement.setDouble(8, ch.getGIAXE());
+            callableStatement.setInt(9, ch.getSLXE());
+            callableStatement.setString(10, ch.getMACD());
+            callableStatement.setString(11, ch.getMANV());
+            callableStatement.setString(12, ch.getMAHOPDONG());
             callableStatement.executeUpdate();
         }
 }
@@ -77,7 +76,7 @@ import java.text.SimpleDateFormat;
         int ketQua = 0;
         try {
             Connection con = OracleJDBCconnection.getJDBCconnection();
-            String sql = "DELETE FROM SANPHAM WHERE masp=?";
+            String sql = "DELETE FROM CANHO WHERE MACH=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, s.getMACH());
             ketQua = pst.executeUpdate();
@@ -153,4 +152,79 @@ import java.text.SimpleDateFormat;
         }
         return ketQua;
     }
-}
+//    public Modelcanho findcanhobyid(String MACH)
+//    {
+//        PreparedStatement pst=null;
+//        ResultSet rs =null;
+//       // List<Modelcanho> ls=new ArrayList();
+////        ArrayList<Modelcanho> ketQua = new ArrayList<Modelcanho>();
+//        try {
+//            Connection con = OracleJDBCconnection.getJDBCconnection();
+//            String sql = "SELECT * FROM CANHO WHERE MACH='"+MACH+"'";
+//            pst = con.prepareStatement(sql);
+//            rs = pst.executeQuery();
+//            while (rs.next()) {
+//                Modelcanho modelch=new Modelcanho();
+//                modelch.setMACH(rs.getString("MACH"));
+//                modelch.setDienTich(rs.getDouble("DienTich"));
+//                modelch.setLoaiCH(rs.getString("LoaiCH"));
+//                modelch.setSoPhongNgu(rs.getInt("SoPhongNgu"));
+//                modelch.setSoPhongTam(rs.getInt("SoPhongTam"));
+//                modelch.setTang(rs.getInt("Tang"));
+//                modelch.setGiaThue(rs.getDouble("GiaThue"));
+//                modelch.setPHIDV(rs.getDouble("PHIDV"));
+//                modelch.setGIAXE(rs.getDouble("GIAXE"));
+//                modelch.setSLXE(rs.getInt("SLXE"));
+//                modelch.setMACD(rs.getString("MACD"));
+//                modelch.setMANV(rs.getString("MANV"));
+//                modelch.setMAHOPDONG(rs.getString("MAHOPDONG"));
+//                return  modelch ;
+//              //  ls.add(modelch);
+//               
+//            }
+//        } catch (Exception e) {
+//               System.out.print("Errol"+e.toString());                 
+//                }
+//    return null;
+//    
+//
+//        
+//                
+//    }
+    //@Override
+    public Modelcanho selectById(String s) {
+        Modelcanho ketQua = null;
+        try {
+            Connection con = OracleJDBCconnection.getJDBCconnection();
+            String sql = "SELECT * FROM SANPHAM WHERE masp=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, s);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                String MACH = rs.getString("MACH");
+                Double DienTich= rs.getDouble("DienTich");
+                String LoaiCH = rs.getString("LoaiCH");
+                int SoPhongNgu = rs.getInt("SoPhongNgu");
+                int SoPhongTam = rs.getInt("SoPhongTam");
+                int Tang = rs.getInt("Tang");
+                Double GiaThue = rs.getDouble("GiaThue");
+                Double PHIDV= rs.getDouble("PHIDV");
+                Double GIAXE = rs.getDouble("GIAXE");
+                int SLXE= rs.getInt("SLXE");
+                String MACD=rs.getString("MACD");
+                String MANV=rs.getString("MANV");
+                String MAHOPDONG=rs.getString("MAHOPDONG");
+                
+                ketQua= new Modelcanho(MACH, DienTich ,LoaiCH, SoPhongNgu, SoPhongTam, Tang, GiaThue, PHIDV,GIAXE,SLXE,MACD,MANV,MAHOPDONG);
+               
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
+        }
+        
+      //  return ls;
+    
