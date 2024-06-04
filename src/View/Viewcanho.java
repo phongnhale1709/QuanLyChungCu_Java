@@ -6,6 +6,13 @@ package View;
 //import controller.TimSanPham;
 //import dao.NhaCungCapDAO;
 import DAO.Daocanho;
+import DAO.Daocthd;
+import DAO.Daocudan;
+import DAO.Daohoadon;
+import DAO.Daohopdong;
+import DAO.Daotaikhoan;
+import DAO.Daoxe;
+import DAO.Daoyeucaucd;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
@@ -17,33 +24,81 @@ import javax.swing.event.DocumentListener;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.TableColumn;
 import MODEL.Modelcanho;
+import MODEL.Modelcudan;
+import MODEL.Modelhoadon;
+import MODEL.Modelhopdong;
+import MODEL.Modeltaikhoan;
 import controler.Timcanho;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author HP
  */
 public class Viewcanho extends javax.swing.JFrame {
-    
-     private DefaultTableModel tblModel;
+    String ma ="";
+    private DefaultTableModel tblModel;
     DecimalFormat formatter = new DecimalFormat("###,###,###");
 
      /**
      * Creates new form NewJFrame
      */
     public Viewcanho() {
+       
         initComponents();
         jTableCanho.setDefaultEditor(Object.class, null);
               initTable();
+               this.setLocationRelativeTo(null);
        loadDataToTable();
         //filltable();
         
-        changeTextFind();
+        //changeTextFind();
     }
+    
+    public Viewcanho(String ma) {
+       
+        initComponents();
+        jTableCanho.setDefaultEditor(Object.class, null);
+              initTable();
+               this.setLocationRelativeTo(null);
+               this.ma = ma ;
+       loadDataToTable1();
+        //filltable();
+        
+        //changeTextFind();
+    }
+    
      public final void initTable() {
         tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"Mã căn hộ", "Diện Tích", "LoạiCH", "Số Phòng Ngủ", "Số Phòng Tắm", "Tầng", "Giá Thuê", "Phí DV","Giá Xe","SL xe"};
         tblModel.setColumnIdentifiers(headerTbl);
         jTableCanho.setModel(tblModel);
+        
+        jTableCanho.setRowHeight(25);
+        jTableCanho.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        // Alternating row colors
+        jTableCanho.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (isSelected) {
+                    c.setBackground(new Color(0, 120, 215)); // Màu nền cho hàng được chọn (thay đổi nếu cần)
+                    c.setForeground(Color.WHITE); // Màu chữ cho hàng được chọn (thay đổi nếu cần)
+                } else {
+                    c.setBackground(row % 2 == 0 ? Color.LIGHT_GRAY : Color.WHITE);
+                    c.setForeground(Color.BLACK); // Màu chữ cho hàng không được chọn
+                }
+                return c;
+            }
+        });
+        
+        
         jTableCanho.getColumnModel().getColumn(0).setPreferredWidth(20);
         jTableCanho.getColumnModel().getColumn(1).setPreferredWidth(20);
         jTableCanho.getColumnModel().getColumn(2).setPreferredWidth(20);
@@ -70,7 +125,11 @@ public class Viewcanho extends javax.swing.JFrame {
             public void removeUpdate(DocumentEvent e) {
                 /* do nothing */
                 if (txttracuu.getText().length() == 0) {
+                    if (ma.equals("")) {
                     loadDataToTable();
+                } else {
+                    loadDataToTable1();
+                }
                 }
             }
 
@@ -95,10 +154,37 @@ public class Viewcanho extends javax.swing.JFrame {
         }
         return result;
     }
+    public MODEL.Modelcanho getDetail() {
+        MODEL.Modelcanho a = Daocanho.getInstance().selectById(getCANHOSelect().getMACH());
+        return a;
+    }
+    public MODEL.Modelcanho getCANHOSelect() {
+        int i_row = jTableCanho.getSelectedRow();
+        MODEL.Modelcanho ch = Daocanho.getInstance().selectAll().get(i_row);
+        return ch;
+    }
      public void loadDataToTable() {
     try {
         Daocanho chdao = new Daocanho();
         ArrayList<MODEL.Modelcanho> arms = chdao.selectAll();
+        tblModel.setRowCount(0);
+        for (MODEL.Modelcanho i : arms ) {
+            tblModel.addRow(new Object[]{
+                    i.getMACH(), i.getDienTich(),i.getLoaiCH(),i.getSoPhongNgu(),i.getSoPhongTam(),i.getTang(),formatter.format(i.getGiaThue()) + "đ",formatter.format(i.getPHIDV()) + "đ",
+                formatter.format(i.getGIAXE()) + "đ",i.getSLXE()
+                  
+            });
+        }
+    } catch (Exception e) {
+        System.err.println(e.toString());
+        
+    }
+}
+     
+     public void loadDataToTable1() {
+    try {
+        Daocanho chdao = new Daocanho();
+        ArrayList<MODEL.Modelcanho> arms = chdao.selectCHByMANV(ma);
         tblModel.setRowCount(0);
         for (MODEL.Modelcanho i : arms ) {
             tblModel.addRow(new Object[]{
@@ -123,9 +209,8 @@ public class Viewcanho extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnthem = new javax.swing.JButton();
-        btnxoa = new javax.swing.JButton();
-        btnsua = new javax.swing.JButton();
+        btnxoach = new javax.swing.JButton();
+        btnsuach = new javax.swing.JButton();
         btntracuu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCanho = new javax.swing.JTable();
@@ -133,30 +218,33 @@ public class Viewcanho extends javax.swing.JFrame {
         txttracuu = new javax.swing.JTextField();
         jButtontrangchu = new javax.swing.JButton();
         jComboluachon = new javax.swing.JComboBox<>();
+        btnsetchiso = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(196, 233, 245));
+        jPanel1.setBackground(new java.awt.Color(55, 139, 167));
         jPanel1.setForeground(new java.awt.Color(196, 233, 245));
 
-        btnthem.setText("Thêm");
-        btnthem.addActionListener(new java.awt.event.ActionListener() {
+        btnxoach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-delete-30.png"))); // NOI18N
+        btnxoach.setText("Xóa chủ căn hộ");
+        btnxoach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnthemActionPerformed(evt);
+                btnxoachActionPerformed(evt);
             }
         });
 
-        btnxoa.setText("Xóa");
-
-        btnsua.setText("Sửa");
-        btnsua.addActionListener(new java.awt.event.ActionListener() {
+        btnsuach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-update-30 (1).png"))); // NOI18N
+        btnsuach.setText("Sửa");
+        btnsuach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsuaActionPerformed(evt);
+                btnsuachActionPerformed(evt);
             }
         });
 
-        btntracuu.setText("Tra cứu");
+        btntracuu.setBackground(new java.awt.Color(55, 139, 167));
+        btntracuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-search-36.png"))); // NOI18N
+        btntracuu.setBorder(null);
         btntracuu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btntracuuMouseClicked(evt);
@@ -194,7 +282,8 @@ public class Viewcanho extends javax.swing.JFrame {
             jTableCanho.getColumnModel().getColumn(4).setMinWidth(50);
         }
 
-        labQLCH.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labQLCH.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labQLCH.setForeground(new java.awt.Color(255, 255, 255));
         labQLCH.setText("QUẢN LÝ CĂN HỘ");
 
         txttracuu.addActionListener(new java.awt.event.ActionListener() {
@@ -203,8 +292,10 @@ public class Viewcanho extends javax.swing.JFrame {
             }
         });
 
+        jButtontrangchu.setBackground(new java.awt.Color(55, 139, 167));
         jButtontrangchu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButtontrangchu.setText("TRANG CHỦ");
+        jButtontrangchu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-home-48.png"))); // NOI18N
+        jButtontrangchu.setBorder(null);
         jButtontrangchu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtontrangchuActionPerformed(evt);
@@ -218,100 +309,117 @@ public class Viewcanho extends javax.swing.JFrame {
             }
         });
 
+        btnsetchiso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-update-item (2).png"))); // NOI18N
+        btnsetchiso.setText("Cập nhật số điện/nước");
+        btnsetchiso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsetchisoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(226, 226, 226)
-                        .addComponent(btnthem, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
-                        .addComponent(btnsua, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(btnxoa, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButtontrangchu, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(209, 209, 209)
-                        .addComponent(labQLCH)))
-                .addContainerGap(283, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jComboluachon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addComponent(txttracuu, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(btntracuu, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(245, 245, 245))
+                .addGap(22, 22, 22)
+                .addComponent(btntracuu, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(248, 248, 248))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(194, 194, 194)
+                        .addComponent(btnsetchiso)
+                        .addGap(54, 54, 54)
+                        .addComponent(btnsuach)
+                        .addGap(54, 54, 54)
+                        .addComponent(btnxoach))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtontrangchu)
+                        .addGap(318, 318, 318)
+                        .addComponent(labQLCH)))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labQLCH)
-                    .addComponent(jButtontrangchu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jButtontrangchu))
+                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btntracuu)
-                    .addComponent(txttracuu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboluachon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txttracuu, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboluachon, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnthem)
-                    .addComponent(btnsua)
-                    .addComponent(btnxoa))
-                .addGap(40, 40, 40))
+                    .addComponent(btnsuach)
+                    .addComponent(btnxoach)
+                    .addComponent(btnsetchiso))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txttracuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttracuuActionPerformed
-        // TODO add your handling code here:
-         String luaChon = jComboluachon.getSelectedItem().toString();
+        String luaChon = jComboluachon.getSelectedItem().toString();
         String content = txttracuu.getText();
         ArrayList<MODEL.Modelcanho> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_txttracuuActionPerformed
 
     private void jButtontrangchuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtontrangchuActionPerformed
-        Viewbql viewbql= new Viewbql();
+        if(ma.equals("")) {
+            ViewMenubql viewbql= new ViewMenubql();
         viewbql.show();
-        dispose();        // TODO add your handling code here:
+        dispose();}  
+        else {
+            ViewMenunhanvien viewnv= new ViewMenunhanvien(ma);
+            viewnv.show();
+            dispose();
+        }
     }//GEN-LAST:event_jButtontrangchuActionPerformed
 
-    private void btnthemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnthemActionPerformed
-            Viewthemcanho viewch=new Viewthemcanho();
-            viewch.show();
-            dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_btnthemActionPerformed
-
-    private void btnsuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuaActionPerformed
-        Viewsuacanho viewch=new Viewsuacanho();
-        viewch.show();
-        dispose();  // TODO add your handling code here:
-    }//GEN-LAST:event_btnsuaActionPerformed
+    private void btnsuachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsuachActionPerformed
+        if (ma.equals("")) {
+            if (jTableCanho.getSelectedRow() == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn căn hộ cần sửa");
+    } else {
+        Viewsuacanho frame = new Viewsuacanho(this.getCANHOSelect());
+        frame.setVisible(true);
+        dispose();
+    }
+        }else {
+             if (jTableCanho.getSelectedRow() == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn căn hộ cần sửa");
+    } else {
+        Viewsuacanho frame = new Viewsuacanho(this.getCANHOSelect(),ma);
+        frame.setVisible(true);
+        dispose();
+    }
+        }
+    }//GEN-LAST:event_btnsuachActionPerformed
 
     private void jTableCanhoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableCanhoKeyReleased
         // TODO add your handling code here:
@@ -334,8 +442,12 @@ public class Viewcanho extends javax.swing.JFrame {
     }
 
     private void btntracuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntracuuActionPerformed
-           jComboluachon.setSelectedIndex(0);
-           loadDataToTable();
+          
+           if(ma.equals("")) {
+               loadDataToTable();
+           } else {
+               loadDataToTable1();
+           }
     }//GEN-LAST:event_btntracuuActionPerformed
 
     private void jComboluachonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboluachonActionPerformed
@@ -354,6 +466,187 @@ public class Viewcanho extends javax.swing.JFrame {
         ArrayList<MODEL.Modelcanho> result = searchFn(luaChon, content);
         loadDataToTableSearch(result);
     }//GEN-LAST:event_btntracuuMouseClicked
+    public  MODEL.Modelcanho getCanHoSelect() {
+        int i_row = jTableCanho.getSelectedRow();
+        MODEL.Modelcanho sp =Daocanho.getInstance().selectAll().get(i_row);
+        return sp;
+    }
+    private void btnxoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoachActionPerformed
+        if (ma.equals("")) {
+        if (jTableCanho.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn căn hộ muốn xoá");
+        } else {
+            int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá căn hộ", "Xác nhận xoá căn hộ", JOptionPane.YES_NO_OPTION);
+            
+            if (output == JOptionPane.YES_OPTION) {
+    int selectedRow = jTableCanho.getSelectedRow();
+    String maCH = jTableCanho.getValueAt(selectedRow, 0).toString();
+    
+    Daocanho chdao = new Daocanho();
+    Modelcanho ch=chdao.selectById(maCH);
+    String macd=ch.getMACD();
+    Daohoadon hddao = new Daohoadon();
+    Daocthd ctdao = new Daocthd();
+    Daoxe xedao = new Daoxe();
+    Daohopdong hdongdao = new Daohopdong();
+    Daotaikhoan tkdao = new Daotaikhoan();
+    Daoyeucaucd ycdao= new Daoyeucaucd();
+    
+    
+    
+        ArrayList<MODEL.Modelyeucaucd> armsyc = ycdao.selectByMacd(macd);
+        if (armsyc != null){
+        for (MODEL.Modelyeucaucd yc : armsyc) {
+            ycdao.delete(yc);
+        }
+        }
+        // Xóa tài khoản nếu tồn tại
+        
+
+     
+
+        
+            // Xóa hóa đơn và chi tiết hóa đơn
+            Modelhoadon hdon=new Modelhoadon();
+                try {
+                    hdon = hddao.getHoaDonByMACH(ch.getMACH());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Viewcanho.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            if (hdon != null) {
+                ctdao.delete(hdon);
+                hddao.delete(hdon);
+            }
+          
+            String tam=ch.getMAHOPDONG();
+            int slxe=ch.getSLXE();
+            // Xóa căn hộ
+            chdao.delete(ch);
+            Modelhopdong hdong1 = hdongdao.selectById(tam);
+            if (hdong1 != null) {
+                hdongdao.delete(hdong1);
+            }
+            // Xóa hợp đồng nếu tồn tại
+            
+        
+                // Lấy danh sách xe theo MACD và xóa
+       ArrayList<MODEL.Modelxe> armsxe = xedao.selectXeByMACD(macd);
+        if (armsxe != null) {// Số lượng xe của căn hộ
+            for (int i = 0; i < slxe; i++) {
+                MODEL.Modelxe xe = armsxe.get(i); // Lấy xe ở vị trí i
+                xedao.delete(xe); // Xóa xe
+    }
+        }
+//        Modelcudan cd=Daocudan.getInstance().getCudanByMACD(macd);
+//        // Cuối cùng xóa cư dân
+//        Daocudan.getInstance().delete(cd);
+
+        JOptionPane.showMessageDialog(this, "Xóa thành công!");
+        loadDataToTable();
+  
+
+}
+        }
+        }
+        else 
+        {
+         if (jTableCanho.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn căn hộ muốn xoá");
+        } else {
+            int output = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá căn hộ", "Xác nhận xoá căn hộ", JOptionPane.YES_NO_OPTION);
+            
+            if (output == JOptionPane.YES_OPTION) {
+    int selectedRow = jTableCanho.getSelectedRow();
+    String maCH = jTableCanho.getValueAt(selectedRow, 0).toString();
+    
+    Daocanho chdao = new Daocanho();
+    Modelcanho ch=chdao.selectById(maCH);
+    String macd=ch.getMACD();
+    Daohoadon hddao = new Daohoadon();
+    Daocthd ctdao = new Daocthd();
+    Daoxe xedao = new Daoxe();
+    Daohopdong hdongdao = new Daohopdong();
+    Daotaikhoan tkdao = new Daotaikhoan();
+    Daoyeucaucd ycdao= new Daoyeucaucd();
+    
+    
+    
+        ArrayList<MODEL.Modelyeucaucd> armsyc = ycdao.selectByMacd(macd);
+        if (armsyc != null){
+        for (MODEL.Modelyeucaucd yc : armsyc) {
+            ycdao.delete(yc);
+        }
+        }
+        // Xóa tài khoản nếu tồn tại
+       
+
+     
+
+        
+            // Xóa hóa đơn và chi tiết hóa đơn
+            Modelhoadon hdon=new Modelhoadon();
+                try {
+                    hdon = hddao.getHoaDonByMACH(ch.getMACH());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Viewcanho.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            if (hdon != null) {
+                ctdao.delete(hdon);
+                hddao.delete(hdon);
+            }
+          
+            String tam=ch.getMAHOPDONG();
+            int slxe=ch.getSLXE();
+            // Xóa căn hộ
+            chdao.delete(ch);
+            Modelhopdong hdong1 = hdongdao.selectById(tam);
+            if (hdong1 != null) {
+                hdongdao.delete(hdong1);
+            }
+            // Xóa hợp đồng nếu tồn tại
+            
+        
+                // Lấy danh sách xe theo MACD và xóa
+       ArrayList<MODEL.Modelxe> armsxe = xedao.selectXeByMACD(macd);
+        if (armsxe != null) {// Số lượng xe của căn hộ
+            for (int i = 0; i < slxe; i++) {
+                MODEL.Modelxe xe = armsxe.get(i); // Lấy xe ở vị trí i
+                xedao.delete(xe); // Xóa xe
+    }
+        }
+//        Modelcudan cd=Daocudan.getInstance().getCudanByMACD(macd);
+//        // Cuối cùng xóa cư dân
+//        Daocudan.getInstance().delete(cd);
+
+        JOptionPane.showMessageDialog(this, "Xóa thành công!");
+        loadDataToTable1();
+  
+
+}
+        }
+        }
+    }//GEN-LAST:event_btnxoachActionPerformed
+
+    private void btnsetchisoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsetchisoActionPerformed
+        if (ma.equals("")) {
+            if (jTableCanho.getSelectedRow() == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn căn hộ cần cập nhật điện nước");
+        } else {
+            Viewdiennuoc frame = new Viewdiennuoc(this.getCANHOSelect());
+        frame.setVisible(true);
+        dispose();
+    }
+        }else {
+             if (jTableCanho.getSelectedRow() == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn căn hộ cần cập nhật điện nước");
+        } else {
+            Viewdiennuoc frame = new Viewdiennuoc(this.getCANHOSelect(), ma);
+        frame.setVisible(true);
+        dispose();
+        }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnsetchisoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -399,10 +692,10 @@ public class Viewcanho extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnsua;
-    private javax.swing.JButton btnthem;
+    private javax.swing.JButton btnsetchiso;
+    private javax.swing.JButton btnsuach;
     private javax.swing.JButton btntracuu;
-    private javax.swing.JButton btnxoa;
+    private javax.swing.JButton btnxoach;
     private javax.swing.JButton jButtontrangchu;
     private javax.swing.JComboBox<String> jComboluachon;
     private javax.swing.JPanel jPanel1;

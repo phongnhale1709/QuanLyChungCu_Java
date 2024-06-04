@@ -1,33 +1,34 @@
 
 package DAO;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import Database.OracleJDBCconnection;
+import MODEL.Modelcanho;
+import MODEL.Modelcthd;
+import MODEL.Modeldienke;
+import MODEL.Modeldonghonuoc;
+import MODEL.Modelyeucaucd;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import MODEL.Modelcanho;
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-        public class Daocanho   {
-
-            public static Daocanho getInstance() {
+    public class Daocanho {
+        public static Daocanho getInstance() {
             return new Daocanho();
-                 }
-
-    //@Override
-    public void addcanho (Modelcanho ch) throws SQLException, ParseException {
-        Connection c = OracleJDBCconnection.getJDBCconnection();
-            
-            CallableStatement callableStatement = c.prepareCall("{CALL INSERT_CANHO(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            
+        }
+        
+        public void addcanho (Modelcanho ch) throws SQLException, ParseException {
+            Connection c = OracleJDBCconnection.getJDBCconnection();       
+            CallableStatement callableStatement = c.prepareCall("{CALL INSERT_CANHO(?,?,?,?,?,?,?,?,?,?,?,?,?)}");         
             callableStatement.setString(1, ch.getMACH());
             callableStatement.setDouble(2, ch.getDienTich());
             callableStatement.setString(3, ch.getLoaiCH());
@@ -40,48 +41,102 @@ import java.util.List;
             callableStatement.setInt(10, ch.getSLXE());
             callableStatement.setString(11, ch.getMACD());
             callableStatement.setString(12, ch.getMANV());
-            callableStatement.setString(13, ch.getMAHOPDONG());
-    
+            callableStatement.setString(13, ch.getMAHOPDONG());  
             callableStatement.executeUpdate();
-    
-            // Close resources
             callableStatement.close();
             c.close();
-    }
-    
-
-      public void updatecanho(Modelcanho ch) throws SQLException, ParseException {
-        try (Connection c =OracleJDBCconnection.getJDBCconnection();
-            CallableStatement callableStatement = c.prepareCall("{CALL UPDATE_CANHO(?,?,?,?,?,?,?,?,?,?,?,?)}")) {
-            
-            callableStatement.setDouble(1, ch.getDienTich());
-            callableStatement.setString(2, ch.getLoaiCH());
-            callableStatement.setInt(3, ch.getSoPhongNgu());
-            callableStatement.setInt(4, ch.getSoPhongTam());
-            callableStatement.setInt(5, ch.getTang());
-            callableStatement.setDouble(6, ch.getGiaThue());
-            callableStatement.setDouble(7, ch.getPHIDV());
-            callableStatement.setDouble(8, ch.getGIAXE());
-            callableStatement.setInt(9, ch.getSLXE());
-            callableStatement.setString(10, ch.getMACD());
-            callableStatement.setString(11, ch.getMANV());
-            callableStatement.setString(12, ch.getMAHOPDONG());
-            callableStatement.executeUpdate();
         }
+        
+        public void update(Modelcanho s) throws SQLException, ParseException {
+            if (s.getMACD().equals("null")&& s.getMAHOPDONG().equals("null")&&s.getMANV().equals("null"))
+            {
+                try( Connection c = OracleJDBCconnection.getJDBCconnection();
+                CallableStatement callableStatement = c.prepareCall("{CALL UPDATE1_CANHO(?,?,?,?,?,?,?,?,?,?)}")){
+                callableStatement.setString(1, s.getMACH());
+                callableStatement.setDouble(2, s.getDienTich());
+                callableStatement.setString(3, s.getLoaiCH());
+                callableStatement.setInt(4, s.getSoPhongNgu());
+                callableStatement.setInt(5, s.getSoPhongTam());
+                callableStatement.setInt(6, s.getTang());
+                callableStatement.setDouble(7, s.getGiaThue());
+                callableStatement.setDouble(8, s.getPHIDV());
+                callableStatement.setDouble(9, s.getGIAXE());
+                callableStatement.setInt(10, s.getSLXE());
+                callableStatement.executeUpdate();
+            }
+}
+            else
+            {
+            try( Connection c = OracleJDBCconnection.getJDBCconnection();
+                CallableStatement callableStatement = c.prepareCall("{CALL UPDATE_CANHO(?,?,?,?,?,?,?,?,?,?,?,?,?)}")){
+                callableStatement.setString(1, s.getMACH());
+                callableStatement.setDouble(2, s.getDienTich());
+                callableStatement.setString(3, s.getLoaiCH());
+                callableStatement.setInt(4, s.getSoPhongNgu());
+                callableStatement.setInt(5, s.getSoPhongTam());
+                callableStatement.setInt(6, s.getTang());
+                callableStatement.setDouble(7, s.getGiaThue());
+                callableStatement.setDouble(8, s.getPHIDV());
+                callableStatement.setDouble(9, s.getGIAXE());
+                callableStatement.setInt(10, s.getSLXE());
+                callableStatement.setString(11, s.getMACD());
+                callableStatement.setString(12, s.getMANV());
+                callableStatement.setString(13, s.getMAHOPDONG()); 
+                callableStatement.executeUpdate();
+            }
+            }
+    //Override
+  
+        }
+     
+     
+     
+     public void updatedien(Modeldienke d) throws SQLException, ParseException {
+       
+       try( Connection c = OracleJDBCconnection.getJDBCconnection();
+        CallableStatement callableStatement = c.prepareCall("{CALL UPDATE_DIENKE(?,?,?,?)}")){
+            callableStatement.setString(1, d.getMACH());
+            callableStatement.setDouble(2, d.getCST());
+            callableStatement.setDouble(3, d.getCSS());
+            callableStatement.setDouble(4, d.getGIADIEN());
+           
+            callableStatement.executeUpdate();          
 }
 
-  
+    //Override
+     }
+     
+     public void updatenuoc(Modeldonghonuoc n) throws SQLException, ParseException {
+       
+       try( Connection c = OracleJDBCconnection.getJDBCconnection();
+        CallableStatement callableStatement = c.prepareCall("{CALL UPDATE_DONGHONUOC(?,?,?,?)}")){
+            callableStatement.setString(1, n.getMACH());
+            callableStatement.setDouble(2, n.getCST());
+            callableStatement.setDouble(3, n.getCSS());
+            callableStatement.setDouble(4, n.getGIANUOC());
+            
+            callableStatement.executeUpdate();
+//            callableStatement.close();
+          //  c.close();
+          
+}
+
+    //Override
+     }
     
-   public int delete(Modelcanho s) {
+    
+   
+    
+    public int delete(Modelcanho s) {
         int ketQua = 0;
         try {
             Connection con = OracleJDBCconnection.getJDBCconnection();
-            String sql = "DELETE FROM CANHO WHERE MACH=?";
+            String sql = "UPDATE CANHO SET MACD=NULL,MANV=NULL,MAHOPDONG=NULL,SLXE=0 WHERE MACH=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, s.getMACH());
             ketQua = pst.executeUpdate();
             OracleJDBCconnection.closeConnection(con);
-        } catch (Exception e) {
+            }catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
@@ -97,125 +152,55 @@ import java.util.List;
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                String MACH = rs.getString("MACH");
-                Double DienTich= rs.getDouble("DienTich");
-                String LoaiCH = rs.getString("LoaiCH");
-                int SoPhongNgu = rs.getInt("SoPhongNgu");
-                int SoPhongTam = rs.getInt("SoPhongTam");
-                int Tang = rs.getInt("Tang");
-                Double GiaThue = rs.getDouble("GiaThue");
-                Double PHIDV= rs.getDouble("PHIDV");
-                Double GIAXE = rs.getDouble("GIAXE");
-                int SLXE= rs.getInt("SLXE");
-                String MACD=rs.getString("MACD");
-                String MANV=rs.getString("MANV");
-                String MAHOPDONG=rs.getString("MAHOPDONG");
-                
-                Modelcanho ch = new Modelcanho(MACH, DienTich ,LoaiCH, SoPhongNgu, SoPhongTam, Tang, GiaThue, PHIDV,GIAXE,SLXE,MACD,MANV,MAHOPDONG);
+                 String mach = rs.getString("MACH");
+                double dientich= rs.getDouble("DienTich");
+                String loaich = rs.getString("LoaiCH");
+                int sophngu = rs.getInt("SoPhongNgu");
+                int sophtam = rs.getInt("SoPhongTam");
+                int tang = rs.getInt("Tang");
+                double giathue = rs.getDouble("GiaThue");
+                double phidv = rs.getDouble("PHIDV");
+                double giaxe = rs.getDouble("GIAXE");
+                int slxe = rs.getInt("SLXE");
+                String macd= rs.getString("MACD");
+                String manv= rs.getString("MANV");
+                String mahopdong= rs.getString("MAHOPDONG");
+             
+                Modelcanho ch = new Modelcanho(mach, dientich ,loaich, sophngu, sophtam, tang, giathue, phidv, giaxe, slxe, macd, manv, mahopdong);
                 ketQua.add(ch);
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
         }
         return ketQua;
     }
-
-    public ArrayList<Modelcanho> selectAllE() {
-        ArrayList<Modelcanho> ketQua = new ArrayList<Modelcanho>();
-        try {
-            Connection con = OracleJDBCconnection.getJDBCconnection();
-            String sql = "SELECT * FROM CANHO WHERE soluong > 0";
-            PreparedStatement pst = con.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-            while (rs.next()) {
-                String MACH = rs.getString("MACH");
-                Double DienTich= rs.getDouble("DienTich");
-                String LoaiCH = rs.getString("LoaiCH");
-                int SoPhongNgu = rs.getInt("SoPhongNgu");
-                int SoPhongTam = rs.getInt("SoPhongTam");
-                int Tang = rs.getInt("Tang");
-                Double GiaThue = rs.getDouble("GiaThue");
-                Double PHIDV= rs.getDouble("PHIDV");
-                Double GIAXE = rs.getDouble("GIAXE");
-                int SLXE= rs.getInt("SLXE");
-                String MACD=rs.getString("MACD");
-                String MANV=rs.getString("MANV");
-                String MAHOPDONG=rs.getString("MAHOPDONG");
-                
-                Modelcanho ch = new Modelcanho(MACH, DienTich ,LoaiCH, SoPhongNgu, SoPhongTam, Tang, GiaThue, PHIDV,GIAXE,SLXE,MACD,MANV,MAHOPDONG);
-                ketQua.add(ch);
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-        }
-        return ketQua;
-    }
-//    public Modelcanho findcanhobyid(String MACH)
-//    {
-//        PreparedStatement pst=null;
-//        ResultSet rs =null;
-//       // List<Modelcanho> ls=new ArrayList();
-////        ArrayList<Modelcanho> ketQua = new ArrayList<Modelcanho>();
-//        try {
-//            Connection con = OracleJDBCconnection.getJDBCconnection();
-//            String sql = "SELECT * FROM CANHO WHERE MACH='"+MACH+"'";
-//            pst = con.prepareStatement(sql);
-//            rs = pst.executeQuery();
-//            while (rs.next()) {
-//                Modelcanho modelch=new Modelcanho();
-//                modelch.setMACH(rs.getString("MACH"));
-//                modelch.setDienTich(rs.getDouble("DienTich"));
-//                modelch.setLoaiCH(rs.getString("LoaiCH"));
-//                modelch.setSoPhongNgu(rs.getInt("SoPhongNgu"));
-//                modelch.setSoPhongTam(rs.getInt("SoPhongTam"));
-//                modelch.setTang(rs.getInt("Tang"));
-//                modelch.setGiaThue(rs.getDouble("GiaThue"));
-//                modelch.setPHIDV(rs.getDouble("PHIDV"));
-//                modelch.setGIAXE(rs.getDouble("GIAXE"));
-//                modelch.setSLXE(rs.getInt("SLXE"));
-//                modelch.setMACD(rs.getString("MACD"));
-//                modelch.setMANV(rs.getString("MANV"));
-//                modelch.setMAHOPDONG(rs.getString("MAHOPDONG"));
-//                return  modelch ;
-//              //  ls.add(modelch);
-//               
-//            }
-//        } catch (Exception e) {
-//               System.out.print("Errol"+e.toString());                 
-//                }
-//    return null;
-//    
-//
-//        
-//                
-//    }
-    //@Override
+    
+    
     public Modelcanho selectById(String s) {
         Modelcanho ketQua = null;
         try {
             Connection con = OracleJDBCconnection.getJDBCconnection();
-            String sql = "SELECT * FROM SANPHAM WHERE masp=?";
+            String sql = "SELECT * FROM CANHO WHERE MACH=?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, s);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                String MACH = rs.getString("MACH");
-                Double DienTich= rs.getDouble("DienTich");
-                String LoaiCH = rs.getString("LoaiCH");
-                int SoPhongNgu = rs.getInt("SoPhongNgu");
-                int SoPhongTam = rs.getInt("SoPhongTam");
-                int Tang = rs.getInt("Tang");
-                Double GiaThue = rs.getDouble("GiaThue");
-                Double PHIDV= rs.getDouble("PHIDV");
-                Double GIAXE = rs.getDouble("GIAXE");
-                int SLXE= rs.getInt("SLXE");
-                String MACD=rs.getString("MACD");
-                String MANV=rs.getString("MANV");
-                String MAHOPDONG=rs.getString("MAHOPDONG");
+                 String mach = rs.getString("MACH");
+                double dientich= rs.getDouble("DienTich");
+                String loaich = rs.getString("LoaiCH");
+                int sophngu = rs.getInt("SoPhongNgu");
+                int sophtam = rs.getInt("SoPhongTam");
+                int tang = rs.getInt("Tang");
+                double giathue = rs.getDouble("GiaThue");
+                double phidv = rs.getDouble("PHIDV");
+                double giaxe = rs.getDouble("GIAXE");
+                int slxe = rs.getInt("SLXE");
+                String macd= rs.getString("MACD");
+                String manv= rs.getString("MANV");
+                String mahopdong= rs.getString("MAHOPDONG");
                 
-                ketQua= new Modelcanho(MACH, DienTich ,LoaiCH, SoPhongNgu, SoPhongTam, Tang, GiaThue, PHIDV,GIAXE,SLXE,MACD,MANV,MAHOPDONG);
+                ketQua = new Modelcanho(mach, dientich ,loaich, sophngu, sophtam, tang, giathue, phidv, giaxe, slxe, macd, manv, mahopdong);
                
             }
         } catch (Exception e) {
@@ -224,7 +209,213 @@ import java.util.List;
         }
         return ketQua;
     }
-        }
-        
-      //  return ls;
     
+    public Modelcanho selectByMacd(String macd) {
+    Modelcanho ketQua = null;
+    try {
+        Connection con = OracleJDBCconnection.getJDBCconnection();
+        String sql = "SELECT * FROM CANHO WHERE MACD=?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, macd);
+        ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            String mach = rs.getString("MACH");
+            double dientich = rs.getDouble("DienTich");
+            String loaich = rs.getString("LoaiCH");
+            int sophngu = rs.getInt("SoPhongNgu");
+            int sophtam = rs.getInt("SoPhongTam");
+            int tang = rs.getInt("Tang");
+            double giathue = rs.getDouble("GiaThue");
+            double phidv = rs.getDouble("PHIDV");
+            double giaxe = rs.getDouble("GIAXE");
+            int slxe = rs.getInt("SLXE");
+            String manv = rs.getString("MANV");
+            String mahopdong = rs.getString("MAHOPDONG");
+
+            ketQua = new Modelcanho(mach, dientich, loaich, sophngu, sophtam, tang, giathue, phidv, giaxe, slxe, macd, manv, mahopdong);
+        }
+        rs.close();
+        pst.close();
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return ketQua;
+}
+    public Modelcanho selectByInvoiceId(String invoiceId) {
+        Modelcanho ketQua = null;
+        try {
+            Connection con = OracleJDBCconnection.getJDBCconnection();
+            String sql = "SELECT c.* FROM CANHO c JOIN HOADON h ON c.MACH = h.MACH WHERE h.MAHD = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, invoiceId);
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                String mach = rs.getString("MACH");
+                double dientich = rs.getDouble("DienTich");
+                String loaich = rs.getString("LoaiCH");
+                int sophngu = rs.getInt("SoPhongNgu");
+                int sophtam = rs.getInt("SoPhongTam");
+                int tang = rs.getInt("Tang");
+                double giathue = rs.getDouble("GiaThue");
+                double phidv = rs.getDouble("PHIDV");
+                double giaxe = rs.getDouble("GIAXE");
+                int slxe = rs.getInt("SLXE");
+                String macd = rs.getString("MACD");
+                String manv = rs.getString("MANV");
+                String mahopdong = rs.getString("MAHOPDONG");
+
+                ketQua = new Modelcanho(mach, dientich, loaich, sophngu, sophtam, tang, giathue, phidv, giaxe, slxe, macd, manv, mahopdong);
+            }
+            
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
+    
+    public ArrayList<Modelcanho> selectCHByMANV(String manv) throws SQLException {
+        ArrayList<Modelcanho> list = new ArrayList<>();
+        Connection con = OracleJDBCconnection.getJDBCconnection();
+        String sql = "SELECT * FROM CANHO WHERE MANV = ?";
+        PreparedStatement pst = con.prepareStatement(sql);
+        pst.setString(1, manv);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            String mach = rs.getString("MACH");
+                double dientich = rs.getDouble("DienTich");
+                String loaich = rs.getString("LoaiCH");
+                int sophngu = rs.getInt("SoPhongNgu");
+                int sophtam = rs.getInt("SoPhongTam");
+                int tang = rs.getInt("Tang");
+                double giathue = rs.getDouble("GiaThue");
+                double phidv = rs.getDouble("PHIDV");
+                double giaxe = rs.getDouble("GIAXE");
+                int slxe = rs.getInt("SLXE");
+                String macd = rs.getString("MACD");
+                String manvien = rs.getString("MANV");
+                String mahopdong = rs.getString("MAHOPDONG");
+                
+            Modelcanho ch = new Modelcanho(mach, dientich, loaich, sophngu, sophtam,tang, giathue, phidv, giaxe, slxe ,macd ,manvien , mahopdong);
+            list.add(ch);
+        }
+        rs.close();
+        pst.close();
+        con.close();
+        return list;
+    }
+    public ArrayList<Modelcanho> selectCHByMACD(String macd) throws SQLException {
+    ArrayList<Modelcanho> list = new ArrayList<>();
+    Connection con = OracleJDBCconnection.getJDBCconnection();
+    String sql = "SELECT * FROM CANHO WHERE MACD = ?";
+    PreparedStatement pst = con.prepareStatement(sql);
+    pst.setString(1, macd);
+    ResultSet rs = pst.executeQuery();
+    while (rs.next()) {
+        String mach = rs.getString("MACH");
+        double dientich = rs.getDouble("DienTich");
+        String loaich = rs.getString("LoaiCH");
+        int sophngu = rs.getInt("SoPhongNgu");
+        int sophtam = rs.getInt("SoPhongTam");
+        int tang = rs.getInt("Tang");
+        double giathue = rs.getDouble("GiaThue");
+        double phidv = rs.getDouble("PHIDV");
+        double giaxe = rs.getDouble("GIAXE");
+        int slxe = rs.getInt("SLXE");
+        String manvien = rs.getString("MANV");
+        String mahopdong = rs.getString("MAHOPDONG");
+        
+        Modelcanho ch = new Modelcanho(mach, dientich, loaich, sophngu, sophtam, tang, giathue, phidv, giaxe, slxe, macd, manvien, mahopdong);
+        list.add(ch);
+    }
+    rs.close();
+    pst.close();
+    con.close();
+    return list;
+}
+    
+    public Modelcthd getCTHDByMAHD(String mahd , String maCanHo) throws SQLException {
+        Connection c = OracleJDBCconnection.getJDBCconnection();
+        Modelcthd cthd = null;
+
+        String query = "SELECT MACH, GiaThue, PHIDV, GIAXE , SLXE FROM CANHO WHERE MACH = ?";
+
+        PreparedStatement preparedStatement = c.prepareStatement(query);
+        preparedStatement.setString(1, maCanHo);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            cthd = new Modelcthd();
+            cthd.setMAHD(mahd);
+            cthd.setGIATHUE(resultSet.getDouble("GiaThue"));
+            double tienxe = resultSet.getDouble("GIAXE") * resultSet.getInt("SLXE");
+            cthd.setPHIXE(tienxe);
+            cthd.setPHIDV(resultSet.getDouble("PHIDV"));
+            cthd.setTIENDIEN(0);
+            cthd.setTIENNUOC(0);
+        }
+
+            resultSet.close();
+            preparedStatement.close();
+            c.close();
+
+        return cthd;
+    }
+    
+    public Modeldienke getDKByMACH(String maCanHo) throws SQLException {
+    Connection c = OracleJDBCconnection.getJDBCconnection();
+    Modeldienke dk = null;
+
+    String query = "SELECT MACH, CHISOTRUOC, CHISOSAU, GIADIEN FROM DIENKE WHERE MACH = ?";
+
+    PreparedStatement preparedStatement = c.prepareStatement(query);
+    preparedStatement.setString(1, maCanHo);
+
+    ResultSet resultSet = preparedStatement.executeQuery();
+
+    if (resultSet.next()) {
+        dk = new Modeldienke();
+        dk.setMACH(maCanHo);
+        dk.setCST(resultSet.getInt("CHISOTRUOC"));
+        dk.setCSS(resultSet.getInt("CHISOSAU"));
+        dk.setGIADIEN(resultSet.getInt("GIADIEN")); // Ensure this gets value from database
+    }
+
+    resultSet.close();
+    preparedStatement.close();
+    c.close();
+
+    return dk;
+}
+
+public Modeldonghonuoc getDHNByMACH(String maCanHo) throws SQLException {
+    Connection c = OracleJDBCconnection.getJDBCconnection();
+    Modeldonghonuoc dhn = null;
+
+    String query = "SELECT MACH, CHISOTRUOC, CHISOSAU, GIANUOC FROM DONGHONUOC WHERE MACH = ?";
+
+    PreparedStatement preparedStatement = c.prepareStatement(query);
+    preparedStatement.setString(1, maCanHo);
+
+    ResultSet resultSet = preparedStatement.executeQuery();
+
+    if (resultSet.next()) {
+        dhn = new Modeldonghonuoc();
+        dhn.setMACH(maCanHo);
+        dhn.setCST(resultSet.getInt("CHISOTRUOC"));
+        dhn.setCSS(resultSet.getInt("CHISOSAU"));
+        dhn.setGIANUOC(resultSet.getInt("GIANUOC")); // Ensure this gets value from database
+    }
+
+    resultSet.close();
+    preparedStatement.close();
+    c.close();
+
+    return dhn;
+}
+       }

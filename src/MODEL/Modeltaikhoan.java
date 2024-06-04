@@ -20,12 +20,13 @@ public class Modeltaikhoan {
         this.role = role;
         this.email = email;
     }
-    public Modeltaikhoan(Modeltaikhoan c)
-    {
-        this.username=c.getUsername();
-        this.password=c.getPassword();
-        this.role=c.getRole();
-        this.email=c.getEmail();
+  
+    
+    public Modeltaikhoan() {
+        this.username = "";
+        this.password = "";
+        this.role = "";
+        this.email = "";
     }
 
     public String getUsername() {

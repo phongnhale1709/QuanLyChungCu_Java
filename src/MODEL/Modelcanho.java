@@ -40,8 +40,21 @@ public class Modelcanho {
         this.MAHOPDONG = MAHOPDONG;
     }
 
+//   
     public Modelcanho() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.MACH = "";
+        this.DienTich = 0;
+        this.LoaiCH = "";
+        this.SoPhongNgu = 0;
+        this.SoPhongTam = 0;
+        this.Tang = 0;
+        this.GiaThue = 0;
+        this.PHIDV = 0;
+        this.GIAXE = 0;
+        this.SLXE = 0;
+        this.MACD = "";
+        this.MANV = "";
+        this.MAHOPDONG = "";
     }
 
     public String getMACH() {
